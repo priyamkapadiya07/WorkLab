@@ -74,8 +74,12 @@ const Projects = () => {
             <option value="All">All Types</option>
             <option value="Website">Website</option>
             <option value="Web App">Web App</option>
-            <option value="Personal Project">Personal Project</option>
+            <option value="Game">Game</option>
+            <option value="College Project">College Project</option>
             <option value="Client Project">Client Project</option>
+            <option value="Personal Project">Personal Project</option>
+            <option value="Experiment">Experiment</option>
+            <option value="Other">Other</option>
           </select>
         </div>
       </div>
