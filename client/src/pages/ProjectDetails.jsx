@@ -8,10 +8,12 @@ import { Skeleton } from '../components/ui/Skeleton';
 import { ArrowLeft, GitBranch as Github, ExternalLink, Calendar, Star, GitFork, RefreshCw, Trash2, Edit } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProjectModal from '../components/ProjectModal';
+import { useProjects } from '../context/ProjectContext';
 
 const ProjectDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { refreshProjects } = useProjects();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -28,6 +30,7 @@ const ProjectDetails = () => {
     setDeleting(true);
     try {
       await axios.delete(`/api/projects/${id}`);
+      await refreshProjects();
       navigate('/projects');
     } catch (error) {
       console.error('Failed to delete project', error);
@@ -256,7 +259,10 @@ const ProjectDetails = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         project={project}
-        onSaved={fetchProject} 
+        onSaved={() => {
+          fetchProject();
+          refreshProjects();
+        }} 
       />
     </div>
   );

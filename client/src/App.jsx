@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ProjectProvider } from './context/ProjectContext';
 
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
@@ -90,46 +91,48 @@ const AppLayout = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <AppLayout>
-                <Navigate to="/dashboard" />
-              </AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <AppLayout>
-                <Dashboard />
-              </AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/projects" element={
-            <ProtectedRoute>
-              <AppLayout>
-                <Projects />
-              </AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/projects/:id" element={
-            <ProtectedRoute>
-              <AppLayout>
-                <ProjectDetails />
-              </AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/github-sync" element={
-            <ProtectedRoute>
-              <AppLayout>
-                <GithubSync />
-              </AppLayout>
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </Router>
+      <ProjectProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Navigate to="/dashboard" />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Dashboard />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/projects" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <Projects />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/projects/:id" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <ProjectDetails />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/github-sync" element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <GithubSync />
+                </AppLayout>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Router>
+      </ProjectProvider>
     </AuthProvider>
   );
 }

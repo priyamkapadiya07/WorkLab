@@ -6,28 +6,13 @@ import { Badge } from '../components/ui/Badge';
 import { Search, Filter, GitBranch as Github, ExternalLink, Calendar, Code2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ProjectModal from '../components/ProjectModal';
+import { useProjects } from '../context/ProjectContext';
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { projects, loading, refreshProjects } = useProjects();
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('All');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const { data } = await axios.get('/api/projects');
-      setProjects(data);
-    } catch (error) {
-      console.error('Failed to fetch projects', error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const filteredProjects = projects.filter(p => {
     const matchesSearch = (p.name || '').toLowerCase().includes(search.toLowerCase()) || 
@@ -148,7 +133,7 @@ const Projects = () => {
       <ProjectModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
-        onSaved={fetchProjects} 
+        onSaved={refreshProjects} 
       />
     </div>
   );

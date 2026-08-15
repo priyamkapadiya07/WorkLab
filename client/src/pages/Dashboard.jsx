@@ -1,28 +1,13 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Skeleton } from '../components/ui/Skeleton';
 import { Server, Activity, Briefcase, ExternalLink, GitBranch as Github } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useProjects } from '../context/ProjectContext';
 
 const Dashboard = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const { data } = await axios.get('/api/projects');
-        setProjects(data);
-      } catch (error) {
-        console.error('Failed to fetch projects', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, []);
+  const { projects, loading } = useProjects();
 
   if (loading) {
     return (
