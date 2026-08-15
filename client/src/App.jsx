@@ -11,7 +11,12 @@ import { NavLink } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const Login = () => {
-  const { login } = useAuth();
+  const { login, user, loading } = useAuth();
+  
+  if (!loading && user) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] p-4">
       <div className="card w-full max-w-md text-center p-8 border border-[var(--color-border)]">
