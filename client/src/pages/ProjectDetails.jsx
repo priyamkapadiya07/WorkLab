@@ -17,10 +17,23 @@ const ProjectDetails = () => {
   const [syncing, setSyncing] = useState(false);
   const [checking, setChecking] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetchProject();
   }, [id]);
+
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this project? This will remove it from your DevVault (but not from GitHub).')) return;
+    setDeleting(true);
+    try {
+      await axios.delete(`/api/projects/${id}`);
+      navigate('/projects');
+    } catch (error) {
+      console.error('Failed to delete project', error);
+      setDeleting(false);
+    }
+  };
 
   const fetchProject = async () => {
     setLoading(true);
@@ -94,7 +107,18 @@ const ProjectDetails = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => setIsModalOpen(true)}><Edit className="h-4 w-4 mr-2"/> Edit Metadata</Button>
+          <Button variant="outline" size="sm" onClick={() => setIsModalOpen(true)}>
+            <Edit className="h-4 w-4 mr-2"/> Edit Metadata
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleDelete} 
+            disabled={deleting}
+            className="text-[var(--color-destructive)] hover:bg-[var(--color-destructive)] hover:text-white border-[var(--color-destructive)]/30 transition-colors"
+          >
+            <Trash2 className="h-4 w-4 mr-2"/> {deleting ? 'Deleting...' : 'Delete'}
+          </Button>
         </div>
       </div>
 
