@@ -53,16 +53,16 @@ const AppLayout = ({ children }) => {
     <div className="min-h-screen flex flex-col md:flex-row bg-[var(--color-background)]">
       <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-[var(--color-border)] bg-[var(--color-card)] md:h-screen md:sticky md:top-0 flex flex-col z-10 shrink-0">
         <div className="h-16 flex items-center px-6 border-b border-[var(--color-border)] shrink-0">
-          <div className="font-mono font-bold text-xl tracking-tight text-white">WorkLab</div>
+          <div className="font-serif  text-3xl tracking-wide text-white">Work<span className="text-[var(--color-accent)] font-semibold text-4xl font-sarif italic">Lab</span> </div>
         </div>
         <nav className="flex-1 py-6 px-4 space-y-2 flex flex-row md:flex-col overflow-x-auto md:overflow-y-auto">
-          <NavLink to="/dashboard" className={({isActive}) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
+          <NavLink to="/dashboard" className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
             <LayoutDashboard className="h-4 w-4" /> Dashboard
           </NavLink>
-          <NavLink to="/projects" className={({isActive}) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
+          <NavLink to="/projects" className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
             <FolderKanban className="h-4 w-4" /> Projects
           </NavLink>
-          <NavLink to="/github-sync" className={({isActive}) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
+          <NavLink to="/github-sync" className={({ isActive }) => `flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors ${isActive ? 'bg-[var(--color-muted)] text-white' : 'text-[var(--color-muted-foreground)] hover:text-white hover:bg-[var(--color-muted)]/50'}`}>
             <GithubIcon className="h-4 w-4" /> GitHub Sync
           </NavLink>
         </nav>
