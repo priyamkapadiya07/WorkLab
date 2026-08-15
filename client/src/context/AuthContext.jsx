@@ -24,7 +24,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    window.location.href = '/api/auth/github';
+    if (import.meta.env.DEV) {
+      window.location.href = '/api/auth/github';
+    } else {
+      window.location.href = 'https://worklab-api.onrender.com/api/auth/github';
+    }
   };
 
   const logout = async () => {
