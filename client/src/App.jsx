@@ -66,12 +66,12 @@ const AppLayout = ({ children }) => {
             <GithubIcon className="h-4 w-4" /> GitHub Sync
           </NavLink>
         </nav>
-        <div className="p-4 border-t border-[var(--color-border)]">
-          <div className="flex items-center gap-3 mb-4">
+        <div className="p-4 border-t md:border-t-0 border-[var(--color-border)] flex flex-row md:flex-col justify-between items-center md:items-start gap-4 md:gap-0">
+          <div className="flex items-center gap-3 md:mb-4">
             {user?.avatarUrl && <img src={user.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-[var(--color-border)]" />}
-            <span className="text-sm font-medium text-white truncate">{user?.username}</span>
+            <span className="text-sm font-medium text-white truncate max-w-[120px] md:max-w-none">{user?.username}</span>
           </div>
-          <button onClick={logout} className="text-xs text-[var(--color-muted-foreground)] hover:text-white transition-colors w-full text-left font-mono">
+          <button onClick={logout} className="text-xs text-[var(--color-muted-foreground)] hover:text-white transition-colors md:w-full md:text-left font-mono whitespace-nowrap">
             Logout &rarr;
           </button>
         </div>

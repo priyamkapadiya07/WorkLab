@@ -70,14 +70,61 @@ const GithubSync = () => {
         </div>
       ) : (
         <div className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl overflow-hidden shadow-sm">
-          <div className="overflow-x-auto">
+          {/* Mobile View: Cards */}
+          <div className="block md:hidden divide-y divide-[var(--color-border)]">
+            {repos.map((repo) => (
+              <div key={repo.id} className="p-4 space-y-4 hover:bg-[var(--color-background)]/50 transition-colors">
+                <div className="flex justify-between items-start gap-4">
+                  <div>
+                    <div className="font-semibold text-[var(--color-foreground)]">{repo.name}</div>
+                    <div className="text-[var(--color-muted-foreground)] text-xs mt-1">{repo.description || 'No description'}</div>
+                  </div>
+                  <span className={`px-2 py-1 rounded-sm text-[10px] uppercase font-mono shrink-0 ${repo.visibility === 'public' ? 'bg-[var(--color-muted)] text-white' : 'bg-[#EF4444]/20 text-[#EF4444]'}`}>
+                    {repo.visibility}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-2 border-t border-[var(--color-border)]/50">
+                  <span className="font-mono text-xs text-[var(--color-muted-foreground)]">
+                    {repo.language || '-'}
+                  </span>
+                  {repo.isImported ? (
+                    <span className="inline-flex items-center text-[var(--color-accent)] font-medium text-xs">
+                      <CheckCircle2 className="h-4 w-4 mr-1" /> Imported
+                    </span>
+                  ) : (
+                    <Button 
+                      variant="secondary" 
+                      size="sm" 
+                      onClick={() => handleImport(repo)}
+                      disabled={importing === repo.id}
+                    >
+                      {importing === repo.id ? (
+                        <RefreshCw className="h-3 w-3 mr-1 animate-spin" />
+                      ) : (
+                        <Download className="h-3 w-3 mr-1" />
+                      )}
+                      Import
+                    </Button>
+                  )}
+                </div>
+              </div>
+            ))}
+            {repos.length === 0 && !loading && (
+              <div className="p-8 text-center text-[var(--color-muted-foreground)] text-sm">
+                No repositories found on your GitHub account.
+              </div>
+            )}
+          </div>
+
+          {/* Desktop View: Table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-[var(--color-muted-foreground)] uppercase bg-[var(--color-background)] border-b border-[var(--color-border)]">
                 <tr>
-                  <th className="px-6 py-4 font-mono font-medium">Repository</th>
-                  <th className="px-6 py-4 font-mono font-medium">Language</th>
-                  <th className="px-6 py-4 font-mono font-medium">Visibility</th>
-                  <th className="px-6 py-4 font-mono font-medium text-right">Action</th>
+                  <th className="px-6 py-4 font-serif font-medium">Repository</th>
+                  <th className="px-6 py-4 font-serif font-medium">Language</th>
+                  <th className="px-6 py-4 font-serif font-medium">Visibility</th>
+                  <th className="px-6 py-4 font-serif font-medium text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--color-border)]">
