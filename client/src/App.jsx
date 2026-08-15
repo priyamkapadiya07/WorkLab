@@ -76,7 +76,11 @@ const AppLayout = ({ children }) => {
             {user?.avatarUrl && <img src={user.avatarUrl} alt="Avatar" className="w-8 h-8 rounded-full border border-[var(--color-border)]" />}
             <span className="text-sm font-medium text-white truncate max-w-[120px] md:max-w-none">{user?.username}</span>
           </div>
-          <button onClick={logout} className="text-xs text-[var(--color-muted-foreground)] hover:text-white transition-colors md:w-full md:text-left font-mono whitespace-nowrap">
+          <button onClick={() => {
+            if (window.confirm('Are you sure you want to logout?')) {
+              logout();
+            }
+          }} className="text-xs text-[var(--color-muted-foreground)] hover:text-white transition-colors md:w-full md:text-left font-mono whitespace-nowrap">
             Logout &rarr;
           </button>
         </div>
