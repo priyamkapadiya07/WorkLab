@@ -62,7 +62,7 @@
   }
 
   .card-hoverable {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)]/50 hover:shadow-[0_0_15px_rgba(34, 197, 94, 0.1)];
+    @apply transition-all duration-300 hover:-translate-y-1 hover:border-[var(--color-accent)]/50 hover:shadow-[0_0_15px_rgba(34,197,94,0.1)];
   }
 
   .input {
