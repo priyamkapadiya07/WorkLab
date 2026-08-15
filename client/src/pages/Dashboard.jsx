@@ -38,7 +38,7 @@ const Dashboard = () => {
     );
   }
 
-  const liveProjects = projects.filter(p => p.deploymentStatus === 'Live').length;
+  const liveProjects = projects.filter(p => p.liveUrl).length;
   const completedProjects = projects.filter(p => p.status === 'Completed').length;
   const featuredProjects = projects.filter(p => p.featured);
 
@@ -95,37 +95,46 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredProjects.map(project => (
               <Card key={project._id} className="flex flex-col card-hoverable">
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <CardTitle className="text-xl font-bold truncate text-[var(--color-accent)]">{project.name}</CardTitle>
-                    {project.deploymentStatus === 'Live' ? <Badge variant="success">Live</Badge> : <Badge variant="success">Completed</Badge>}
-                  </div>
-                  <div className="text-sm text-[var(--color-muted-foreground)]">{project.type}</div>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <p className="text-sm mb-4 line-clamp-3">
-                    {project.customDescription || project.github?.description || 'No description provided.'}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.technologies?.slice(0, 3).map(tech => (
-                      <Badge key={tech} variant="secondary" className="font-mono text-[10px] uppercase">
-                        {tech}
-                      </Badge>
-                    ))}
-                    {project.technologies?.length > 3 && (
-                      <Badge variant="secondary" className="font-mono text-[10px]">+{project.technologies.length - 3}</Badge>
+                <Link to={`/projects/${project._id}`} className="flex-1 flex flex-col group">
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <CardTitle className="text-xl font-bold truncate group-hover:text-[var(--color-accent)] transition-colors">{project.name}</CardTitle>
+                      {project.deploymentStatus === 'Live' ? <Badge variant="success">Live</Badge> : <Badge variant="success">Completed</Badge>}
+                    </div>
+                    <div className="text-sm text-[var(--color-muted-foreground)]">{project.type}</div>
+                  </CardHeader>
+                  <CardContent className="flex-1 flex flex-col">
+                    {project.customDescription || project.github?.description ? (
+                      <p className="text-sm mb-4 line-clamp-3 text-[var(--color-foreground)]">
+                        {project.customDescription || project.github.description}
+                      </p>
+                    ) : (
+                      <p className="text-sm mb-4 italic text-[var(--color-muted-foreground)]">
+                        No description provided.
+                      </p>
                     )}
-                  </div>
-                </CardContent>
-                <div className="p-6 pt-0 border-t border-[var(--color-border)] mt-4 flex justify-between items-center bg-[var(--color-card)] bg-opacity-50 rounded-b-xl">
+                    
+                    <div className="flex flex-wrap gap-2 mt-auto pb-4">
+                      {project.technologies?.slice(0, 3).map(tech => (
+                        <Badge key={tech} variant="secondary" className="font-mono text-[10px] uppercase">
+                          {tech}
+                        </Badge>
+                      ))}
+                      {project.technologies?.length > 3 && (
+                        <Badge variant="secondary" className="font-mono text-[10px]">+{project.technologies.length - 3}</Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                </Link>
+                <div className="p-4 bg-[var(--color-muted)]/20 rounded-b-xl flex justify-between items-center mt-auto border-t border-[var(--color-border)]/50">
                   {project.github?.url && (
-                    <a href={project.github.url} target="_blank" rel="noopener noreferrer" className="text-[var(--color-muted-foreground)] hover:text-white transition-colors flex items-center text-sm gap-2">
-                      <Github className="h-4 w-4" /> Code
+                    <a href={project.github.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-medium text-[var(--color-muted-foreground)] hover:text-white transition-colors bg-[var(--color-background)] px-3 py-1.5 rounded-md border border-[var(--color-border)]">
+                      <Github className="h-3.5 w-3.5" /> Code
                     </a>
                   )}
                   {project.liveUrl && (
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-[var(--color-accent)] hover:text-[var(--color-accent)]/80 transition-colors flex items-center text-sm gap-2 font-medium">
-                      <ExternalLink className="h-4 w-4" /> Live Demo
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-medium text-[var(--color-on-accent)] bg-[var(--color-accent)] hover:bg-[var(--color-accent)]/80 transition-colors px-3 py-1.5 rounded-md">
+                      <ExternalLink className="h-3.5 w-3.5" /> Live Demo
                     </a>
                   )}
                 </div>
