@@ -17,11 +17,13 @@ export default defineConfig({
         theme_color: '#0F172A',
         background_color: '#0F172A',
         display: 'standalone',
+        start_url: '/',
         icons: [
           {
             src: 'pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
             src: 'pwa-512x512.png',
