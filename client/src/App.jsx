@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] p-4">
       <div className="card w-full max-w-md text-center p-8 border border-[var(--color-border)]">
-        <h1 className="text-3xl font-mono mb-2 text-white">WorkLab</h1>
+        <div className="font-serif  text-3xl tracking-wide text-white">Work<span className="text-[var(--color-accent)] font-semibold text-4xl font-sarif italic">Lab</span></div>
         <p className="text-[var(--color-muted-foreground)] mb-8 text-sm">Personal Developer Project Vault</p>
         <button onClick={login} className="btn btn-primary w-full shadow-md font-mono text-sm tracking-wide">
           Login with GitHub
