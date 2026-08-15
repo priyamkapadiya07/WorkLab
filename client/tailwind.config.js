@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['IBM Plex Sans', 'sans-serif'],
+        sans: ['Jost', 'sans-serif'],
+        serif: ['Bodoni Moda', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {

@@ -30,7 +30,7 @@ const Dashboard = () => {
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
       <div>
-        <h1 className="text-3xl font-mono font-bold tracking-tight mb-2">Vault Overview</h1>
+        <h1 className="text-3xl font-serif italic tracking-tight mb-2">Vault Overview</h1>
         <p className="text-[var(--color-muted-foreground)]">Your personal project management center.</p>
       </div>
 
@@ -41,7 +41,7 @@ const Dashboard = () => {
             <Briefcase className="h-4 w-4 text-[var(--color-muted-foreground)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-mono font-bold">{projects.length}</div>
+            <div className="text-4xl font-serif font-bold text-white mt-2">{projects.length}</div>
           </CardContent>
         </Card>
         
@@ -51,7 +51,7 @@ const Dashboard = () => {
             <Activity className="h-4 w-4 text-[var(--color-accent)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-mono font-bold text-[var(--color-accent)]">{liveProjects}</div>
+            <div className="text-4xl font-serif font-bold text-[var(--color-accent)] mt-2">{liveProjects}</div>
           </CardContent>
         </Card>
 
@@ -61,14 +61,14 @@ const Dashboard = () => {
             <Server className="h-4 w-4 text-[var(--color-muted-foreground)]" />
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-mono font-bold">{completedProjects}</div>
+            <div className="text-4xl font-serif font-bold text-white mt-2">{completedProjects}</div>
           </CardContent>
         </Card>
       </div>
 
       <div className="mt-12">
         <div className="flex justify-between items-end mb-6">
-          <h2 className="text-xl font-semibold tracking-tight">Featured Projects</h2>
+          <h2 className="text-2xl font-serif italic tracking-tight">Featured Projects</h2>
           <Link to="/projects" className="text-sm text-[var(--color-accent)] hover:underline">View All Projects &rarr;</Link>
         </div>
         

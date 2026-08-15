@@ -54,10 +54,10 @@ const GithubSync = () => {
     <div className="p-8 max-w-5xl mx-auto">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-mono font-bold tracking-tight mb-2 flex items-center gap-3">
+          <h1 className="text-3xl font-serif italic tracking-tight mb-2 flex items-center gap-3">
             <Github className="h-8 w-8" /> GitHub Repository Sync
           </h1>
-          <p className="text-[var(--color-muted-foreground)]">Import your GitHub repositories to track them in DevVault.</p>
+          <p className="text-[var(--color-muted-foreground)]">Import your GitHub repositories to track them in WorkLeb.</p>
         </div>
         <Button variant="outline" onClick={fetchRepos} disabled={loading}>
           <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} /> Refresh

@@ -102,7 +102,7 @@ const ProjectDetails = () => {
       <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-8 pb-8 border-b border-[var(--color-border)]">
         <div>
           <div className="flex items-center gap-4 mb-3">
-            <h1 className="text-4xl font-mono font-bold tracking-tight">{project.name}</h1>
+            <h1 className="text-4xl font-serif italic tracking-tight">{project.name}</h1>
             {project.featured && <Badge variant="success">Featured</Badge>}
           </div>
           <p className="text-[var(--color-muted-foreground)] max-w-2xl text-lg">

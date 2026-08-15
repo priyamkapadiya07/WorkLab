@@ -25,7 +25,7 @@ const Projects = () => {
     <div className="p-8 max-w-7xl mx-auto flex flex-col h-full">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-mono font-bold tracking-tight mb-2">Projects</h1>
+          <h1 className="text-3xl font-serif italic tracking-tight mb-2">Projects</h1>
           <p className="text-[var(--color-muted-foreground)]">Manage and filter your entire repository vault.</p>
         </div>
         
