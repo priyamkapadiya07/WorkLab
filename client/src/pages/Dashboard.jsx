@@ -6,6 +6,8 @@ import { Server, Activity, Briefcase, ExternalLink, GitBranch as Github } from '
 import { Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
 
+import HealthDashboard from '../components/ui/HealthDashboard';
+
 const Dashboard = () => {
   const { projects, loading } = useProjects();
 
@@ -34,7 +36,7 @@ const Dashboard = () => {
         <p className="text-[var(--color-muted-foreground)]">Your personal project management center.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="hover:transform-none hover:shadow-sm cursor-default">
           <CardHeader className="pb-2 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-sm font-medium text-[var(--color-muted-foreground)] uppercase tracking-wider">Total Projects</CardTitle>
@@ -66,6 +68,8 @@ const Dashboard = () => {
         </Card>
       </div>
 
+      <HealthDashboard />
+
       <div className="mt-12">
         <div className="flex justify-between items-end mb-6">
           <h2 className="text-2xl font-serif italic tracking-tight">Featured Projects</h2>
@@ -77,7 +81,7 @@ const Dashboard = () => {
             No featured projects yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-2">
             {featuredProjects.map(project => (
               <Card key={project._id} className="flex flex-col card-hoverable">
                 <Link to={`/projects/${project._id}`} className="flex-1 flex flex-col group">
@@ -111,7 +115,7 @@ const Dashboard = () => {
                     </div>
                   </CardContent>
                 </Link>
-                <div className="p-4 bg-[var(--color-muted)]/20 rounded-b-xl flex justify-between items-center mt-auto border-t border-[var(--color-border)]/50">
+                <div className="p-4 bg-[var(--color-muted)]/20 rounded-b-xl flex flex-wrap gap-2 justify-between items-center mt-auto border-t border-[var(--color-border)]/50">
                   {project.github?.url && (
                     <a href={project.github.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-xs font-medium text-[var(--color-muted-foreground)] hover:text-white transition-colors bg-[var(--color-background)] px-3 py-1.5 rounded-md border border-[var(--color-border)]">
                       <Github className="h-3.5 w-3.5" /> Code

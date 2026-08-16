@@ -113,4 +113,31 @@ router.post('/:id/check-deployment', async (req, res) => {
   }
 });
 
+// Sync health for all deployed projects
+router.post('/health-sync', async (req, res) => {
+  try {
+    const projects = await Project.find({ userId: req.user._id, liveUrl: { $exists: true, $ne: '' } });
+    
+    await Promise.all(projects.map(async (project) => {
+      try {
+        const response = await axios.get(project.liveUrl, { timeout: 5000 });
+        if (response.status >= 200 && response.status < 400) {
+          project.deploymentStatus = 'Live';
+        } else {
+          project.deploymentStatus = 'Unavailable';
+        }
+      } catch (err) {
+        project.deploymentStatus = 'Unavailable';
+      }
+      project.lastDeploymentCheck = new Date();
+      await project.save();
+    }));
+
+    const allProjects = await Project.find({ userId: req.user._id }).sort({ updatedAt: -1 });
+    res.json(allProjects);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;

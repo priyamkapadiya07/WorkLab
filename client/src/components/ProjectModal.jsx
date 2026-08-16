@@ -63,7 +63,7 @@ const ProjectModal = ({ isOpen, onClose, project = null, onSaved }) => {
           slug: payload.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now().toString().slice(-4)
         });
       }
-      onSaved();
+      onSaved(payload);
       onClose();
     } catch (error) {
       console.error('Failed to save project', error);

@@ -63,12 +63,14 @@ const ProjectDetails = () => {
     }
   };
 
-  const checkDeployment = async () => {
-    if (!project.liveUrl) return;
+  const checkDeployment = async (forceUrl = null) => {
+    const targetUrl = typeof forceUrl === 'string' ? forceUrl : project?.liveUrl;
+    if (!targetUrl) return;
     setChecking(true);
     try {
       const { data } = await axios.post(`/api/projects/${id}/check-deployment`);
-      setProject({ ...project, deploymentStatus: data.status, lastDeploymentCheck: data.lastChecked });
+      setProject(prev => ({ ...prev, deploymentStatus: data.status, lastDeploymentCheck: data.lastChecked }));
+      refreshProjects();
     } catch (error) {
       console.error('Check failed', error);
     } finally {
@@ -259,9 +261,12 @@ const ProjectDetails = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
         project={project}
-        onSaved={() => {
-          fetchProject();
+        onSaved={async (savedPayload) => {
+          await fetchProject();
           refreshProjects();
+          if (savedPayload?.liveUrl) {
+            checkDeployment(savedPayload.liveUrl);
+          }
         }} 
       />
     </div>

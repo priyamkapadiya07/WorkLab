@@ -11,6 +11,8 @@ export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [isCheckingHealth, setIsCheckingHealth] = useState(false);
+
   const fetchProjects = async () => {
     if (!user) return;
     setLoading(true);
@@ -21,6 +23,19 @@ export const ProjectProvider = ({ children }) => {
       console.error('Failed to fetch projects context', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const checkHealthStatus = async () => {
+    if (!user) return;
+    setIsCheckingHealth(true);
+    try {
+      const { data } = await axios.post('/api/projects/health-sync');
+      setProjects(data); // update with the refreshed data
+    } catch (error) {
+      console.error('Failed to sync health status', error);
+    } finally {
+      setIsCheckingHealth(false);
     }
   };
 
@@ -38,7 +53,7 @@ export const ProjectProvider = ({ children }) => {
   };
 
   return (
-    <ProjectContext.Provider value={{ projects, loading, refreshProjects }}>
+    <ProjectContext.Provider value={{ projects, loading, refreshProjects, checkHealthStatus, isCheckingHealth }}>
       {children}
     </ProjectContext.Provider>
   );
