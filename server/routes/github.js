@@ -37,7 +37,11 @@ router.get('/repositories', async (req, res) => {
 
     res.json(formattedRepos);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('GitHub API Error fetching repos:', error.response?.data || error.message);
+    res.status(error.response?.status || 500).json({ 
+      error: error.response?.data?.message || error.message,
+      details: error.response?.data 
+    });
   }
 });
 

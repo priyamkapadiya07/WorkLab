@@ -15,13 +15,19 @@ const GithubSync = () => {
     fetchRepos();
   }, []);
 
+  const [authError, setAuthError] = useState(false);
+
   const fetchRepos = async () => {
     setLoading(true);
+    setAuthError(false);
     try {
       const { data } = await axios.get('/api/github/repositories');
       setRepos(data);
     } catch (error) {
       console.error('Failed to fetch repositories', error);
+      if (error.response?.status === 401 || (error.response?.status === 500 && error.response?.data?.error?.includes('Bad credentials'))) {
+        setAuthError(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -109,7 +115,11 @@ const GithubSync = () => {
                 </div>
               </div>
             ))}
-            {repos.length === 0 && !loading && (
+            {authError ? (
+              <div className="p-8 text-center text-red-400 text-sm">
+                Your GitHub connection has expired or is invalid. Please log out and log back in to reconnect.
+              </div>
+            ) : repos.length === 0 && !loading && (
               <div className="p-8 text-center text-[var(--color-muted-foreground)] text-sm">
                 No repositories found on your GitHub account.
               </div>
@@ -165,13 +175,21 @@ const GithubSync = () => {
                     </td>
                   </tr>
                 ))}
+                {authError ? (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-12 text-center text-red-400">
+                      Your GitHub connection has expired or is invalid. Please log out and log back in to reconnect.
+                    </td>
+                  </tr>
+                ) : repos.length === 0 && !loading && (
+                  <tr>
+                    <td colSpan="4" className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
+                      No repositories found on your GitHub account.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
-            {repos.length === 0 && !loading && (
-              <div className="p-12 text-center text-[var(--color-muted-foreground)]">
-                No repositories found on your GitHub account.
-              </div>
-            )}
           </div>
         </div>
       )}
